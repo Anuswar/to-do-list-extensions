@@ -4,13 +4,13 @@ This Chrome extension allows you to create and manage to-do lists right in your 
 
 ## 🌟 Features
 
-- ✅ Add new tasks to the list.
-- ✔️ Mark tasks as completed.
-- ✏️ Edit existing tasks.
-- 🗑️ Delete tasks from the list.
-- 📊 Real-time display of the number of pending tasks.
-- 🎯 Filter tasks based on their status (all, pending, completed).
-- 📱 Responsive design for mobile and desktop.
+- Add new tasks to the list.
+- Mark tasks as completed.
+- Edit existing tasks.
+- Delete tasks from the list.
+- Real-time display of the number of pending tasks.
+- Filter tasks based on their status (all, pending, completed).
+- Responsive design for mobile and desktop.
 
 ## ⚙️ Installation
 
