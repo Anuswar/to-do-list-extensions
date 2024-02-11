@@ -1,18 +1,20 @@
-# To-Do List Web Extensions
+# To-Do List Extensions 📝
 
 This Chrome extension allows you to create and manage to-do lists right in your browser. You can add tasks, mark them as completed, edit task descriptions, and easily clear completed tasks.
 
-## Features
+## 🌟 Features
 
-- Add new tasks to the list.
-- Mark tasks as completed.
-- Edit existing tasks.
-- Delete tasks from the list.
-- Real-time display of the number of pending tasks.
-- Filter tasks based on their status (all, pending, completed).
-- Responsive design for mobile and desktop.
+- ✅ Add new tasks to the list.
+- ✔️ Mark tasks as completed.
+- ✏️ Edit existing tasks.
+- 🗑️ Delete tasks from the list.
+- 📊 Real-time display of the number of pending tasks.
+- 🎯 Filter tasks based on their status (all, pending, completed).
+- 📱 Responsive design for mobile and desktop.
 
-## Installation
+## ⚙️ Installation
+
+To run this extension locally or make contributions, follow these steps:
 
 1. Clone the repository:
 
@@ -23,7 +25,7 @@ This Chrome extension allows you to create and manage to-do lists right in your 
 2. Navigate to the project directory:
 
    ```bash
-   cd todo-list
+   cd to-do-list-extensions
    ```
 
 3. Open Chrome browser.
@@ -33,13 +35,32 @@ This Chrome extension allows you to create and manage to-do lists right in your 
 7. Select the directory where you cloned this repository.
 8. The Chrome extension will be installed and ready to use.
 
-## Technologies Used
+## 🛠️ Technologies Used
 
 - HTML
 - CSS
 - JavaScript
 - Local Storage for data persistence
 
-## License
+## 📂 Project Structure
 
-This project is licensed under the [MIT License](LICENSE).
+The project structure is organized as follows:
+
+- **assets**: This directory holds any static assets used in the extension, such as images.
+- **popup/**: Contains HTML, CSS, and JavaScript files for the extension's popup UI.
+- **manifest.json**: The manifest file defines the extension's metadata, permissions, and other important details.
+- **README.md**: Documentation for the project (you are here).
+
+## 🤝 Contributing
+
+Contributions are welcome! If you find any issues, have suggestions, or want to add new features, please open an issue or create a pull request. Follow these steps:
+
+1. **Fork the repository.**
+2. **Create a new branch** for your feature or bug fix.
+3. **Make your changes and commit them** with descriptive commit messages.
+4. **Push your changes to your fork.**
+5. **Open a pull request** to the `main` branch of the original repository.
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE.md), which means you are free to use, modify, and distribute the code.
