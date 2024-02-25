@@ -42,7 +42,7 @@ To run this extension locally or make contributions, follow these steps:
 - JavaScript
 - Local Storage for data persistence
 
-## 📂 Project Structure
+## 📂 File Structure
 
 The project structure is organized as follows:
 
