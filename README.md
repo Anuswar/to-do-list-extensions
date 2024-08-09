@@ -1,5 +1,4 @@
-![To Do List Extensions Preview](https://raw.githubusercontent.com/Anuswar/to-do-list-extensions/main/1723220971158.jpg)
-![Varnothsava Website Preview](https://raw.githubusercontent.com/Anuswar/to-do-list-extensions/main/1723220971158.jpg)
+![To Do List Extensions Preview](https://raw.githubusercontent.com/Anuswar/to-do-list-extensions/main/images/preview.jpg)
 
 # To-Do List Extensions 📝
 
