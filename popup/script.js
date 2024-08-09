@@ -1,11 +1,12 @@
 (function () {
   // Cache DOM elements
   const inputBoxElement = document.getElementById("input-box");
+  const rowElement = document.querySelector(".row");
   const listContainerElement = document.getElementById("list-container");
   const sortableList = document.querySelector(".sortable-list");
   const pendingNum = document.querySelector(".pending-num");
   const clearButton = document.querySelector(".clear-button");
-  const addTaskButton = document.querySelector("#addTaskButton");
+  const addTaskButton = document.getElementById("addTaskButton");
 
   // Initialize a safe localStorage wrapper to handle potential errors
   const safeLocalStorage = getSafeLocalStorage();
@@ -17,7 +18,8 @@
   sortableList.addEventListener("dragenter", (e) => e.preventDefault());
   listContainerElement.addEventListener("click", handleListClick);
   inputBoxElement.addEventListener("input", autoExpandTextarea);
-  inputBoxElement.addEventListener("keypress", handleKeyPress); // Ensure keypress event is attached
+  inputBoxElement.addEventListener("input", removeErrorStyles);
+  inputBoxElement.addEventListener("keypress", handleKeyPress);
   addTaskButton.addEventListener("click", addTask);
   clearButton.addEventListener("click", clearTasks);
 
@@ -32,9 +34,6 @@
           localStorage.setItem(key, value);
         } catch (error) {
           console.error(`Error setting item in localStorage: ${error}`);
-          showError(
-            "Unable to save data. Please ensure that Local Storage is enabled and not full."
-          );
         }
       },
       getItem: (key) => {
@@ -43,9 +42,6 @@
           return value ? JSON.parse(value) : [];
         } catch (error) {
           console.error(`Error getting item from localStorage: ${error}`);
-          showError(
-            "Unable to retrieve data. Please ensure that Local Storage is enabled."
-          );
           return [];
         }
       },
@@ -70,8 +66,8 @@
 
   // Automatically expand the textarea as the user types
   function autoExpandTextarea() {
-    this.style.height = 'auto'; // Reset the height to auto to calculate the new height
-    this.style.height = `${this.scrollHeight}px`; // Set the height based on scrollHeight
+    this.style.height = 'auto'; 
+    this.style.height = `${this.scrollHeight}px`; 
   }
 
   // Handle clicks on the task list (mark as completed or delete task)
@@ -103,7 +99,7 @@
   function addTask() {
     let taskValue = inputBoxElement.value.trim();
     if (!taskValue) {
-      showError("You must write something!");
+      applyErrorStyles();
       return;
     }
 
@@ -116,7 +112,7 @@
     renderTaskList();
     addDragAndDropListeners();
     inputBoxElement.value = "";
-    autoExpandTextarea.call(inputBoxElement); // Adjust height after adding task
+    autoExpandTextarea.call(inputBoxElement); 
   }
 
   // Clear all tasks from the list
@@ -229,29 +225,15 @@
     return div.innerHTML;
   }
 
-  // Display an error notification
-  function showError(message) {
-    const notificationContainer = document.getElementById(
-      "notification-container"
-    );
-    const notification = document.createElement("div");
-    notification.className = "notification";
-    notification.textContent = message;
+  // Apply error styles to the row
+  function applyErrorStyles() {
+    rowElement.classList.add("error-row");
+    inputBoxElement.placeholder = "Please add a task!";
+  }
 
-    const closeBtn = document.createElement("span");
-    closeBtn.className = "closebtn";
-    closeBtn.textContent = "×";
-    closeBtn.onclick = function () {
-      notificationContainer.removeChild(notification);
-    };
-    notification.appendChild(closeBtn);
-
-    notificationContainer.appendChild(notification);
-
-    setTimeout(() => {
-      if (notificationContainer.contains(notification)) {
-        notificationContainer.removeChild(notification);
-      }
-    }, 4000);
+  // Remove error styles from the row on typing
+  function removeErrorStyles() {
+    rowElement.classList.remove("error-row");
+    inputBoxElement.placeholder = "Add your task";
   }
 })();
