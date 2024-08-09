@@ -1,3 +1,5 @@
+![To Do List Extensions Preview](https://raw.githubusercontent.com/Anuswar/to-do-list-extensions/main/images/preview.jpg)
+
 # To-Do List Extensions 📝
 
 This Chrome extension allows you to create and manage to-do lists right in your browser. You can add tasks, mark them as completed, edit task descriptions, and easily clear completed tasks.
