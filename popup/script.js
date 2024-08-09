@@ -1,26 +1,30 @@
 (function () {
+  // Cache DOM elements
   const inputBoxElement = document.getElementById("input-box");
   const listContainerElement = document.getElementById("list-container");
   const sortableList = document.querySelector(".sortable-list");
   const pendingNum = document.querySelector(".pending-num");
   const clearButton = document.querySelector(".clear-button");
-  const addTaskButton = document.querySelector("button");
-  const filters = document.querySelectorAll(".filters span");
+  const addTaskButton = document.querySelector("#addTaskButton");
 
+  // Initialize a safe localStorage wrapper to handle potential errors
   const safeLocalStorage = getSafeLocalStorage();
 
+  // Set up event listeners for various interactions
   document.body.addEventListener("load", updateTime);
   document.body.addEventListener("click", keepInputFocused);
   sortableList.addEventListener("dragover", initSortableList);
   sortableList.addEventListener("dragenter", (e) => e.preventDefault());
-  listContainerElement.addEventListener("dblclick", handleDblClick);
-  inputBoxElement.addEventListener("keypress", handleKeyPress);
+  listContainerElement.addEventListener("click", handleListClick);
   inputBoxElement.addEventListener("input", autoExpandTextarea);
+  inputBoxElement.addEventListener("keypress", handleKeyPress); // Ensure keypress event is attached
   addTaskButton.addEventListener("click", addTask);
   clearButton.addEventListener("click", clearTasks);
 
+  // Initialize the application once the DOM is fully loaded
   document.addEventListener("DOMContentLoaded", initialize);
 
+  // Wrapper for localStorage with error handling
   function getSafeLocalStorage() {
     return {
       setItem: (key, value) => {
@@ -48,122 +52,46 @@
     };
   }
 
-  function showError(message) {
-    const notificationContainer = document.getElementById(
-      "notification-container"
-    );
-    const notification = document.createElement("div");
-    notification.className = "notification";
-    notification.textContent = message;
-
-    const closeBtn = document.createElement("span");
-    closeBtn.className = "closebtn";
-    closeBtn.textContent = "×";
-    closeBtn.onclick = function () {
-      if (notificationContainer.contains(notification)) {
-        // Check if it's a child before removing
-        notificationContainer.removeChild(notification);
-      }
-    };
-    notification.appendChild(closeBtn);
-
-    notificationContainer.appendChild(notification);
-
-    setTimeout(() => {
-      if (notificationContainer.contains(notification)) {
-        // Check if it's a child before removing
-        notificationContainer.removeChild(notification);
-      }
-    }, 3000);
-  }
-
-  filters.forEach((btn) => {
-    // New Block
-    btn.addEventListener("click", () => {
-      document.querySelector("span.active").classList.remove("active");
-      btn.classList.add("active");
-      renderTaskList(btn.id);
-    });
-  });
-
+  // Function to update the time display
   function updateTime() {
     const data = new Date();
     const h = data.getHours();
     const m = data.getMinutes();
     const s = data.getSeconds();
-    document.getElementById("hour").textContent = `${h < 10 ? "0" : ""}${h}:${
-      m < 10 ? "0" : ""
-    }${m}:${s < 10 ? "0" : ""}${s}`;
+    document.getElementById("hour").textContent = `${h < 10 ? "0" : ""}${h}:${m < 10 ? "0" : ""}${m}:${s < 10 ? "0" : ""}${s}`;
   }
 
+  // Keep the input box focused if the user clicks elsewhere on the page
   function keepInputFocused(e) {
     if (e.target !== inputBoxElement) {
       inputBoxElement.focus();
     }
   }
 
+  // Automatically expand the textarea as the user types
   function autoExpandTextarea() {
-    this.style.height = "auto";
-    this.style.height = `${this.scrollHeight}px`;
+    this.style.height = 'auto'; // Reset the height to auto to calculate the new height
+    this.style.height = `${this.scrollHeight}px`; // Set the height based on scrollHeight
   }
 
-  function handleDblClick(e) {
+  // Handle clicks on the task list (mark as completed or delete task)
+  function handleListClick(e) {
+    const tasks = safeLocalStorage.getItem("tasks");
     if (e.target.tagName === "LI") {
-      const li = e.target;
-      const span = li.querySelector("span");
-      const currentText = li.textContent.slice(0, -1);
-
-      const textarea = document.createElement("textarea");
-      textarea.value = currentText;
-      textarea.rows = 1;
-      textarea.style.width = "calc(100% - 30px)";
-      textarea.style.overflow = "hidden";
-
-      li.textContent = "";
-      li.appendChild(textarea);
-      li.appendChild(span);
-
-      textarea.focus();
-      textarea.style.height = `${textarea.scrollHeight}px`;
-
-      textarea.addEventListener("input", function () {
-        this.style.height = "auto";
-        this.style.height = `${this.scrollHeight}px`;
-      });
-
-      textarea.addEventListener("blur", function () {
-        const newText = this.value;
-        li.textContent = newText;
-        li.appendChild(span);
-
-        const index = Array.from(listContainerElement.children).indexOf(li);
-        const tasks = safeLocalStorage.getItem("tasks");
-        tasks[index].value = newText;
-        safeLocalStorage.setItem("tasks", JSON.stringify(tasks));
-      });
-    }
-  }
-
-  listContainerElement.addEventListener("click", function(event) {
-    const target = event.target;
-    if (target.tagName === "LI") {
-      target.classList.toggle("checked");
-      const index = Array.from(listContainerElement.children).indexOf(target);
-      const tasks = safeLocalStorage.getItem("tasks");
-      tasks[index].status = target.classList.contains("checked") ? "completed" : "pending";
+      e.target.classList.toggle("checked");
+      const index = Array.from(listContainerElement.children).indexOf(e.target);
+      tasks[index].status = e.target.classList.contains("checked") ? "completed" : "pending";
       safeLocalStorage.setItem("tasks", JSON.stringify(tasks));
-      renderTaskList(document.querySelector("span.active").id);
-    } else if (target.tagName === "SPAN") {
-      const listItem = target.parentElement;
-      const index = Array.from(listContainerElement.children).indexOf(listItem);
-      const tasks = safeLocalStorage.getItem("tasks");
+      updatePendingTasks();
+    } else if (e.target.tagName === "SPAN") {
+      const index = Array.from(listContainerElement.children).indexOf(e.target.parentElement);
       tasks.splice(index, 1);
       safeLocalStorage.setItem("tasks", JSON.stringify(tasks));
-      listItem.remove();
-      renderTaskList(document.querySelector("span.active").id);
+      renderTaskList();
     }
-  });
+  }
 
+  // Add a new task when the user presses the "Enter" key
   function handleKeyPress(e) {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -171,6 +99,7 @@
     }
   }
 
+  // Add a new task to the list
   function addTask() {
     let taskValue = inputBoxElement.value.trim();
     if (!taskValue) {
@@ -181,14 +110,16 @@
     taskValue = sanitizeInput(taskValue);
 
     const tasks = safeLocalStorage.getItem("tasks");
-    tasks.push({ value: taskValue, status: "pending" }); // Modified line
+    tasks.push({ value: taskValue, status: "pending" });
     safeLocalStorage.setItem("tasks", JSON.stringify(tasks));
 
     renderTaskList();
     addDragAndDropListeners();
     inputBoxElement.value = "";
+    autoExpandTextarea.call(inputBoxElement); // Adjust height after adding task
   }
 
+  // Clear all tasks from the list
   function clearTasks() {
     listContainerElement.innerHTML = "";
     safeLocalStorage.setItem("tasks", JSON.stringify([]));
@@ -196,12 +127,14 @@
     inputBoxElement.focus();
   }
 
+  // Initialize the app: set up date, time, and render existing tasks
   function initialize() {
     const data = new Date();
     document.getElementById("date").textContent = data.toDateString();
     updateTime();
     setInterval(updateTime, 500);
 
+    // Initialize the textarea height
     inputBoxElement.style.height = `${inputBoxElement.scrollHeight}px`;
 
     renderTaskList();
@@ -209,24 +142,23 @@
     inputBoxElement.focus();
   }
 
-  function renderTaskList(filter = "all") {
+  // Render the task list from localStorage
+  function renderTaskList() {
     const fragment = document.createDocumentFragment();
     const tasks = safeLocalStorage.getItem("tasks");
 
     tasks.forEach((task, id) => {
-      if (filter === task.status || filter === "all") {
-        const taskItem = document.createElement("li");
-        taskItem.textContent = task.value;
-        taskItem.className = "item pending";
-        taskItem.draggable = true;
-        if (task.status === "completed") taskItem.classList.add("checked");
+      const taskItem = document.createElement("li");
+      taskItem.textContent = task.value;
+      taskItem.className = "item";
+      taskItem.draggable = true;
+      if (task.status === "completed") taskItem.classList.add("checked");
 
-        const removeSpan = document.createElement("span");
-        removeSpan.textContent = "\u00D7";
-        taskItem.appendChild(removeSpan);
+      const removeSpan = document.createElement("span");
+      removeSpan.textContent = "\u00D7";
+      taskItem.appendChild(removeSpan);
 
-        fragment.appendChild(taskItem);
-      }
+      fragment.appendChild(taskItem);
     });
 
     listContainerElement.innerHTML = "";
@@ -235,15 +167,22 @@
     updatePendingTasks();
   }
 
+  // Add drag-and-drop functionality to the task list
   function addDragAndDropListeners() {
     const items = sortableList.querySelectorAll(".item");
     items.forEach((item) => {
-      ["dragstart", "dragend"].forEach((event) => {
-        item.addEventListener(event, () => item.classList.toggle("dragging"));
+      item.addEventListener("dragstart", () => {
+        item.classList.add("dragging");
+      });
+
+      item.addEventListener("dragend", () => {
+        item.classList.remove("dragging");
+        saveNewOrder();
       });
     });
   }
 
+  // Initialize sortable list for drag-and-drop
   function initSortableList(e) {
     e.preventDefault();
     const draggingItem = document.querySelector(".dragging");
@@ -259,22 +198,21 @@
     } else {
       sortableList.appendChild(draggingItem);
     }
-
-    saveNewOrder();
-    inputBoxElement.focus();
   }
 
+  // Save the new order of tasks after dragging
   function saveNewOrder() {
     const items = document.querySelectorAll(".item");
     const newOrder = Array.from(items).map((item) => {
       return {
         value: item.textContent.slice(0, -1),
-        status: item.classList.contains("checked") ? "completed" : "pending", // Modified line
+        status: item.classList.contains("checked") ? "completed" : "pending",
       };
     });
     safeLocalStorage.setItem("tasks", JSON.stringify(newOrder));
   }
 
+  // Update the pending tasks counter
   function updatePendingTasks() {
     const tasks = safeLocalStorage.getItem("tasks");
     const pendingTasks = tasks.filter((task) => task.status === "pending");
@@ -284,12 +222,14 @@
       pendingTasks.length === 0 ? "none" : "auto";
   }
 
+  // Sanitize user input to prevent XSS attacks
   function sanitizeInput(input) {
     const div = document.createElement("div");
     div.appendChild(document.createTextNode(input));
     return div.innerHTML;
   }
 
+  // Display an error notification
   function showError(message) {
     const notificationContainer = document.getElementById(
       "notification-container"
@@ -309,7 +249,9 @@
     notificationContainer.appendChild(notification);
 
     setTimeout(() => {
-      notificationContainer.removeChild(notification);
-    }, 3000);
+      if (notificationContainer.contains(notification)) {
+        notificationContainer.removeChild(notification);
+      }
+    }, 4000);
   }
 })();
