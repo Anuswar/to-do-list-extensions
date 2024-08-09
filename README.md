@@ -1,4 +1,4 @@
-![To Do List Extensions Preview](https://raw.githubusercontent.com/Anuswar/to-do-list-extensions/blob/main/images/preview.jpg)
+![To Do List Extensions Preview](https://raw.githubusercontent.com/Anuswar/to-do-list-extensions/main/images/preview.jpg)
 
 # To-Do List Extensions 📝
 
