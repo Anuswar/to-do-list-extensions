@@ -1,7 +1,7 @@
 /* Root Variables for Theme Colors */
 :root {
   --light: #fff;
-  --disabled: #edeef0; 
+  --disabled: #edeef0;
   --main-colour: #ff5945;
   --hover-colour: #102f5e;
 }
@@ -149,7 +149,10 @@ ul {
 ul li {
   font-size: 17px;
   padding: 15px 8px 12px 50px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   cursor: pointer;
   position: relative;
   white-space: normal;
@@ -179,19 +182,21 @@ ul li.checked {
 
 ul li.checked::before {
   background-image: url(/images/checked.png);
-  animation: 1s normal;
+  -webkit-animation: 1s normal;
+          animation: 1s normal;
 }
 
 ul li:hover::before {
   background-image: url(/images/hover.png);
-  animation: 1s normal;
+  -webkit-animation: 1s normal;
+          animation: 1s normal;
 }
 
 ul li:active::before {
   background-image: url(/images/checked.png);
-  animation: 1s normal;
+  -webkit-animation: 1s normal;
+          animation: 1s normal;
 }
-
 
 ul li span {
   position: absolute;
@@ -247,11 +252,11 @@ ul li textarea {
   display: inline-block;
   width: 24px;
   height: 24px;
-  line-height: 24px; 
+  line-height: 24px;
   text-align: center;
-  border-radius: 50%; 
-  background-color: var(--main-colour); 
-  color: var(--light); 
+  border-radius: 50%;
+  background-color: var(--main-colour);
+  color: var(--light);
 }
 
 .pending-tasks .clear-button {
@@ -268,4 +273,3 @@ ul li textarea {
 .clear-button:hover {
   background-color: var(--hover-colour);
 }
-
