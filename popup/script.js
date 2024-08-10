@@ -117,10 +117,13 @@
 
   // Clear all tasks from the list
   function clearTasks() {
-    listContainerElement.innerHTML = "";
-    safeLocalStorage.setItem("tasks", JSON.stringify([]));
-    updatePendingTasks();
-    inputBoxElement.focus();
+    const tasks = safeLocalStorage.getItem("tasks");
+    if (tasks.length > 0) {
+      listContainerElement.innerHTML = "";
+      safeLocalStorage.setItem("tasks", JSON.stringify([]));
+      updatePendingTasks();
+      inputBoxElement.focus();
+    }
   }
 
   // Initialize the app: set up date, time, and render existing tasks
@@ -212,10 +215,8 @@
   function updatePendingTasks() {
     const tasks = safeLocalStorage.getItem("tasks");
     const pendingTasks = tasks.filter((task) => task.status === "pending");
-    pendingNum.textContent =
-      pendingTasks.length === 0 ? "0" : pendingTasks.length;
-    clearButton.style.pointerEvents =
-      pendingTasks.length === 0 ? "none" : "auto";
+    pendingNum.textContent = pendingTasks.length.toString();
+    clearButton.style.pointerEvents = tasks.length === 0 ? "none" : "auto";
   }
 
   // Sanitize user input to prevent XSS attacks

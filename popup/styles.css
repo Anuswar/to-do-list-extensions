@@ -179,11 +179,17 @@ ul li.checked {
 
 ul li.checked::before {
   background-image: url(/images/checked.png);
+  animation: 1s normal;
 }
 
 ul li:hover::before {
   background-image: url(/images/hover.png);
-  transition: 1s;
+  animation: 1s normal;
+}
+
+ul li:active::before {
+  background-image: url(/images/checked.png);
+  animation: 1s normal;
 }
 
 
@@ -237,6 +243,17 @@ ul li textarea {
   color: var(--hover-colour);
 }
 
+.pending-tasks span .pending-num {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px; 
+  text-align: center;
+  border-radius: 50%; 
+  background-color: var(--main-colour); 
+  color: var(--light); 
+}
+
 .pending-tasks .clear-button {
   padding: 6px 12px;
   outline: none;
@@ -251,3 +268,4 @@ ul li textarea {
 .clear-button:hover {
   background-color: var(--hover-colour);
 }
+
