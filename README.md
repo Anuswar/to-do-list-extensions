@@ -40,23 +40,17 @@ To run this extension locally or make contributions, follow these steps:
 
 The repository utilizes the following technologies and tools:
 
-- **HTML**: 
-  - Used for structuring the popup interface in the `index.html` file.
+- **HTML**: Used for structuring the popup interface in the `index.html` file.
 
-- **CSS**: 
-  - Applied for styling the popup interface via the `style.css` file, ensuring a visually appealing design.
+- **CSS**: Applied for styling the popup interface via the `style.css` file, ensuring a visually appealing design.
 
-- **JavaScript**: 
-  - Powers the interactivity and logic within the popup, managed through the `script.js` file.
+- **JavaScript**: Powers the interactivity and logic within the popup, managed through the `script.js` file.
 
-- **Chrome Extension APIs**: 
-  - Facilitates interaction with the Chrome browser, allowing the extension to function seamlessly. Key configurations are set in the `manifest.json` file.
+- **Chrome Extension APIs**: Facilitates interaction with the Chrome browser, allowing the extension to function seamlessly. Key configurations are set in the `manifest.json` file.
 
-- **Visual Studio Code (VS Code)**:
-  - The primary code editor used for development, offering a streamlined environment for writing, testing, and debugging the extension.
+- **Visual Studio Code (VS Code)**: The primary code editor used for development, offering a streamlined environment for writing, testing, and debugging the extension.
 
-- **Git**:
-  - A version control system employed for tracking changes in the project and enabling collaboration.
+- **Git**: A version control system employed for tracking changes in the project and enabling collaboration.
 
 ## 📂 File Structure
 
