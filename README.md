@@ -2,7 +2,16 @@
 
 # To-Do List Extensions 📝
 
-This Chrome extension allows you to create and manage to-do lists right in your browser. You can add tasks, mark them as completed, edit task descriptions, and easily clear completed tasks.
+This repository contains the code and resources for a simple yet powerful To-Do List Chrome Extension. Designed to help you manage tasks efficiently, this extension allows you to add, edit, and delete tasks directly from your browser. With persistent storage, your tasks are saved even after closing the browser, ensuring that your to-do list is always up to date.
+
+### ✨ Key Features:
+
+- Adds and manages tasks through a simple and intuitive popup interface.
+- Marks tasks as completed with a single click using custom checkbox images.
+- Stores tasks locally, ensuring they persist across browser sessions.
+- Highlights tasks on hover for improved user interaction.
+- Utilizes custom icons for a visually appealing and cohesive design.
+- Automatically adapts the interface for different screen sizes within the Chrome environment.
 
 ## ⚙️ Installation
 
@@ -27,21 +36,51 @@ To run this extension locally or make contributions, follow these steps:
 7. Select the directory where you cloned this repository.
 8. The Chrome extension will be installed and ready to use.
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
-- HTML
-- CSS
-- JavaScript
-- Local Storage for data persistence
+The repository utilizes the following technologies and tools:
+
+- **HTML**: 
+  - Used for structuring the popup interface in the `index.html` file.
+
+- **CSS**: 
+  - Applied for styling the popup interface via the `style.css` file, ensuring a visually appealing design.
+
+- **JavaScript**: 
+  - Powers the interactivity and logic within the popup, managed through the `script.js` file.
+
+- **Chrome Extension APIs**: 
+  - Facilitates interaction with the Chrome browser, allowing the extension to function seamlessly. Key configurations are set in the `manifest.json` file.
+
+- **Visual Studio Code (VS Code)**:
+  - The primary code editor used for development, offering a streamlined environment for writing, testing, and debugging the extension.
+
+- **Git**:
+  - A version control system employed for tracking changes in the project and enabling collaboration.
 
 ## 📂 File Structure
 
 The project structure is organized as follows:
 
-- **assets**: This directory holds any static assets used in the extension, such as images.
-- **popup/**: Contains HTML, CSS, and JavaScript files for the extension's popup UI.
-- **manifest.json**: The manifest file defines the extension's metadata, permissions, and other important details.
-- **README.md**: Documentation for the project (you are here).
+```
+to-do-list-extension/
+│
+├── images/                      # Folder for storing images used in the extension
+│   ├── checked.png              # Image for the checked state of a to-do item
+│   ├── unchecked.png            # Image for the unchecked state of a to-do item
+│   ├── hover.png                # Image for the hover effect on to-do items
+│   ├── icon.png                 # Icon for the extension (used in manifest.json)
+│   ├── preview.jpg              # Preview image of the extension's interface
+│
+├── popup/                       # Folder for the popup UI components
+│   ├── index.html               # The main HTML file for the popup interface
+│   ├── script.js                # JavaScript file to handle the popup's functionality
+│   ├── style.css                # CSS file for styling the popup interface
+│
+├── LICENSE.md                   # Licensing information for the extension
+├── README.md                    # Documentation and instructions for using the extension
+├── manifest.json                # Configuration file that defines the extension's properties
+```
 
 ## 🤝 Contributing
 
