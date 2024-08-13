@@ -4,7 +4,7 @@
 
 This repository contains the code and resources for a simple yet powerful To-Do List Chrome Extension. Designed to help you manage tasks efficiently, this extension allows you to add, edit, and delete tasks directly from your browser. With persistent storage, your tasks are saved even after closing the browser, ensuring that your to-do list is always up to date.
 
-### ✨ Key Features:
+## ✨ Key Features:
 
 - Adds and manages tasks through a simple and intuitive popup interface.
 - Marks tasks as completed with a single click using custom checkbox images.
